@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdio.h>
+#include <stdlib.h>
 
 int main(){ 
 
@@ -10,8 +10,10 @@ int main(){
 	int jogador;
 	
 	int i, j;
+	
+	int erro;
     
-    for(i=0; i<3; i++) {
+    	for(i=0; i<3; i++) {
 		for(j=0; j<3; j++) {
 			jogo[i][j] = ' ';
 		}
@@ -38,29 +40,50 @@ int main(){
 		
 		if(jogador){
 			
-			printf("Vez: X\n\n");
 			
-			printf("Digite a linha: ");
-			scanf("%d", &linha);
+			do{
 			
-			printf("Digite a coluna: ");
-			scanf("%d", &coluna);
+				printf("Vez: X\n\n");
+				
+				printf("Digite a linha: ");
+				scanf("%d", &linha);
+				
+				printf("Digite a coluna: ");
+				scanf("%d", &coluna);
+				
+				if(jogo[linha-1][coluna-1] == ' '){
+					jogo[linha-1][coluna-1] = 'X';
+					erro = 0;
+			    }else{
+			    	printf("\nCasa ocupada.\n");
+			    	erro = 1;
+				}
 			
-			jogo[linha-1][coluna-1] = 'X';
+			}while(erro);
 			
 			jogador = 0;
 			
 		}else{
 			
-			printf("Vez: O\n\n");
+			do{
 			
-			printf("Digite a linha: ");
-			scanf("%d", &linha);
+				printf("Vez: O\n\n");
+				
+				printf("Digite a linha: ");
+				scanf("%d", &linha);
+				
+				printf("Digite a coluna: ");
+				scanf("%d", &coluna);
+				
+				if(jogo[linha-1][coluna-1] == ' '){
+					jogo[linha-1][coluna-1] = 'O';
+					erro = 0;
+			    }else{
+			    	printf("\nCasa ocupada.\n");
+			    	erro = 1;
+				}
 			
-			printf("Digite a coluna: ");
-			scanf("%d", &coluna);
-			
-			jogo[linha-1][coluna-1] = 'O';
+			}while(erro);
 			
 			jogador = 1;
 			
