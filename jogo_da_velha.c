@@ -3,9 +3,9 @@
 
 char jogo[3][3];
 
-char nome_jogador_1[20], nome_jogador_2[20];
+char nome_jogador_1[20], nome_jogador_0[20];
 
-int i, j;
+int m, n;
 
 void iniciar_jogo(){
 
@@ -15,9 +15,9 @@ void iniciar_jogo(){
     printf("\t\t\tSeja Bem-Vindo - JOGO DA VELHA ");
     printf("\n===============================================================================\n");
 
-    for(i=0; i<3; i++) {
-        for(j=0; j<3; j++) {
-            jogo[i][j] = ' ';
+    for(m=0; m<3; m++) {
+        for(n=0; n<3; n++) {
+            jogo[m][n] = ' ';
         }
     }
 
@@ -26,7 +26,7 @@ void iniciar_jogo(){
     printf("%s voce ficara com o X\n\n");
 
     printf("Entre com o nome do segundo jogador >> ");
-    scanf("%s", nome_jogador_2);
+    scanf("%s", nome_jogador_0);
     printf("%s voce ficara com o O");
 
 }
@@ -56,53 +56,21 @@ int testa_ganhador(linha, coluna){
 
     int ganhador = 0;
 
-    if(linha == 0){
-
-        if((jogo[0][0]==jogo[0][1]) && (jogo[0][1]==jogo[0][2])){
-            ganhador = 1;
-        }
-
-    }else if(linha == 1){
-
-        if((jogo[1][0]==jogo[1][1]) && (jogo[1][1]==jogo[1][2])){
-            ganhador = 1;
-        }
-
-    }else{
-
-        if((jogo[2][0] == jogo[2][1]) && (jogo[2][1] == jogo[2][2])){
-            ganhador = 1;
-        }
-
+    if( !ganhador && (jogo[linha][0]==jogo[linha][1]) && (jogo[linha][1]==jogo[linha][2]) ){
+        ganhador = 1;
     }
 
-    if(coluna == 0){
-
-        if((jogo[0][0]==jogo[1][0]) && (jogo[1][0]==jogo[2][0])){
-            ganhador = 1;
-        }
-
-    }else if(coluna == 1){
-
-        if((jogo[0][1]==jogo[1][1]) && (jogo[1][1]==jogo[2][1])){
-            ganhador = 1;
-        }
-
-    }else{
-
-        if((jogo[0][2]==jogo[1][2]) && (jogo[1][2]==jogo[2][2])){
-            ganhador = 1;
-        }
-
+    if( !ganhador && (jogo[0][coluna]==jogo[1][coluna]) && (jogo[1][coluna]==jogo[2][coluna]) ){
+        ganhador = 1;
     }
 
-    if(((linha == 0)&&(coluna == 0))||((linha == 1)&&(coluna == 1))||((linha == 2)&&(coluna == 2))){
+    if(  !ganhador && ((linha == 0)&&(coluna == 0)) || ((linha == 1)&&(coluna == 1)) || ((linha == 2)&&(coluna == 2)) ){
         if((jogo[0][0]==jogo[1][1]) && (jogo[0][0]==jogo[2][2])){
             ganhador = 1;
         }
     }
 
-    if(((linha == 0)&&(coluna == 2))||((linha == 1)&&(coluna == 1))||((linha == 2)&&(coluna == 0))){
+    if( !ganhador && ((linha == 0)&&(coluna == 2)) || ((linha == 1)&&(coluna == 1)) || ((linha == 2)&&(coluna == 0)) ){
         if((jogo[0][2]==jogo[1][1]) && (jogo[0][2]==jogo[2][0])){
             ganhador = 1;
         }
@@ -128,13 +96,17 @@ int main(){
 
 	int linha, coluna;
 
-	int jogador;
+	int jogador = 1;
+
+    int velha;
 
 	int erro;
 
     do{
 
         iniciar_jogo();
+
+        velha = 0;
 
         do{
 
@@ -148,7 +120,7 @@ int main(){
 
                 }else{
 
-                    printf("Vez do %s (O)\n\n", nome_jogador_2);
+                    printf("Vez do %s (O)\n\n", nome_jogador_0);
 
                 }
 
@@ -183,16 +155,32 @@ int main(){
 
             }while(erro);
 
-        }while(!testa_ganhador(linha, coluna));
+            velha++;
+
+        }while(!testa_ganhador(linha, coluna) && velha != 9);
 
         exibir_tabuleiro();
+
+        if(velha == 9){
+
+            printf("Deu velha - O jogo terminou em empate!\n\n");
+
+        }else{
+
+            if(jogador){
+                printf("Parabens %s voce ganhou!\n\n", nome_jogador_0);
+            }else{
+                printf("Parabens %s voce ganhou!\n\n", nome_jogador_1);
+            }
+
+        }
 
     }while(finalizar_jogo());
 
     system("cls");
 
 	printf("Fim de jogo\n\n");
-	
+
 	return 0;
 
 }
