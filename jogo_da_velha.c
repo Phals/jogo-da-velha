@@ -108,14 +108,6 @@ int testa_ganhador(linha, coluna){
         }
     }
 
-    for(i=0; i<3; i++) {
-        for(j=0; j<3; j++) {
-            if(jogo[i][j] == ' '){
-                velha = 0;
-            }
-        }
-    }
-
     return ganhador;
 
 }
